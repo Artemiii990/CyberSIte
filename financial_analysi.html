@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Finančná analýza — Váš projekt</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#7c3aed; --glass: rgba(255,255,255,0.03);
+      --success:#16a34a; --danger:#ef4444; --surface:#0b1220;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; background:linear-gradient(180deg,#071029 0%, #071a2b 100%); color:#e6eef8;}
+    .container{max-width:1100px;margin:36px auto;padding:28px}
+    header{display:flex;gap:20px;align-items:center}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#4c1d95);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:20px;box-shadow:0 6px 30px rgba(124,58,237,0.18)}
+    h1{margin:0;font-size:22px}
+    p.lead{color:var(--muted);margin:6px 0 0}
+    .grid{display:grid;grid-template-columns:1fr 380px;gap:22px;margin-top:22px}
+    .card{background:var(--card);padding:18px;border-radius:14px;box-shadow:0 8px 30px rgba(2,6,23,0.6);}
+    .card h2{margin:0 0 12px}
+    .muted{color:var(--muted);font-size:13px}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th,td{padding:10px;border-bottom:1px dashed rgba(255,255,255,0.03);text-align:left}
+    th{font-weight:600;color:#cfe3ff;font-size:13px}
+    td small{display:block;color:var(--muted);font-size:12px}
+    .total-row{font-weight:700;background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent)}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:var(--glass);font-size:13px}
+    .kpi{display:flex;gap:12px;align-items:center}
+    .kpi > div{flex:1}
+    .kpi .big{font-size:20px;font-weight:700}
+    .kpi .delta{font-size:13px;color:var(--muted)}
+    input[type=number]{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit}
+    .row{display:flex;gap:12px}
+    .row .col{flex:1}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr;}.container{padding:18px}}
+    .badge-profit{background:linear-gradient(90deg,#064e3b,#10b981);padding:10px;border-radius:10px;color:white;font-weight:700}
+    .badge-loss{background:linear-gradient(90deg,#7f1d1d,#ef4444);padding:10px;border-radius:10px;color:white;font-weight:700}
+    .note{font-size:13px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">FA</div>
+      <div>
+        <h1>Financial Analysis of the Project — 1 Year</h1>
+        <p class="lead">A comprehensive overview of costs and revenues with calculated cash flow for a 12‑month period. Edit numbers directly in the table to instantly update results.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <section class="card">
+          <h2>Expenses (min. 4 items)</h2>
+          <table>
+            <thead><tr><th>Item</th><th>Type</th><th>Annual (EUR)</th></tr></thead>
+            <tbody id="costs-body">
+              <tr><td>Website development <small>one-time</small></td><td>One-time</td><td><input class="num" data-key="cost-1" type="number" value="2500"></td></tr>
+              <tr><td>Hosting and domain <small>recurring</small></td><td>Annual</td><td><input class="num" data-key="cost-2" type="number" value="180"></td></tr>
+              <tr><td>Marketing <small>recurring</small></td><td>Annual</td><td><input class="num" data-key="cost-3" type="number" value="2400"></td></tr>
+              <tr><td>Support <small>recurring</small></td><td>Annual</td><td><input class="num" data-key="cost-4" type="number" value="600"></td></tr>
+              <tr class="total-row"><td colspan="2">Total expenses</td><td id="costs-total">—</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card" style="margin-top:18px">
+          <h2>Revenue (min. 4 items)</h2>
+          <table>
+            <thead><tr><th>Revenue sources</th><th>Type</th><th>Annual (EUR)</th></tr></thead>
+            <tbody id="revs-body">
+              <tr><td>Subscription services <small>monthly</small></td><td>Recurring</td><td><input class="num" data-key="rev-1" type="number" value="7200"></td></tr>
+              <tr><td>Advertising revenue</td><td>Annual</td><td><input class="num" data-key="rev-2" type="number" value="1500"></td></tr>
+              <tr><td>Product sales</td><td>Annual</td><td><input class="num" data-key="rev-3" type="number" value="2000"></td></tr>
+              <tr><td>Consulting</td><td>Annual</td><td><input class="num" data-key="rev-4" type="number" value="3000"></td></tr>
+              <tr class="total-row"><td colspan="2">Total revenue</td><td id="revs-total">—</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card" style="margin-top:18px">
+          <h2>Comparison of expenses and revenue</h2>
+          <div class="kpi" style="margin-top:8px">
+            <div>
+              <div class="big" id="net-result">— EUR</div>
+              <div class="delta" id="net-desc">—</div>
+            </div>
+            <div style="text-align:right">
+              <div class="pill">ROI <strong id="roi">—</strong></div>
+            </div>
+          </div>
+          <canvas id="chart" style="max-width:100%;height:220px"></canvas>
+        </section>
+
+        <section class="card" style="margin-top:18px">
+          <h2>Conclusion and Recommendations</h2>
+          <p id="conclusion">—</p>
+        </section>
+      </main>
+
+      <aside>
+        <div class="card">
+          <h2>Quick Overview</h2>
+          <div style="margin-top:12px" class="row">
+            <div class="col"><div class="note">Total expenses</div><div class="big" id="side-cost">— EUR</div></div>
+            <div class="col"><div class="note">Total revenue</div><div class="big" id="side-rev">— EUR</div></div>
+          </div>
+          <div style="margin-top:12px" id="badge-wrap"></div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div class="muted">Created for the project. Adjust the items to instantly see the updated result.</div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function number(val){return Number(val)||0}
+    function sumInputs(prefix){
+      return Array.from(document.querySelectorAll('input.num')).filter(i=>i.dataset.key.startsWith(prefix)).reduce((s,i)=>s+number(i.value),0)
+    }
+    function updateAll(){
+      const costs=sumInputs('cost-');const revs=sumInputs('rev-');
+      const costsTotal=costs;const revsTotal=revs;
+      document.getElementById('costs-total').textContent=costsTotal+' €';
+      document.getElementById('revs-total').textContent=revsTotal+' €';
+      document.getElementById('side-cost').textContent=costsTotal+' €';
+      document.getElementById('side-rev').textContent=revsTotal+' €';
+      const net=revsTotal-costsTotal;
+      document.getElementById('net-result').textContent=(net>=0?'+':'')+net+' €';
+      document.getElementById('roi').textContent=(costsTotal>0?Math.round((revsTotal-costsTotal)/costsTotal*100)+'%':'—');
+      document.getElementById('net-desc').textContent=net>=0?'The project is profitable.':'The project is in loss.';
+      const wrap=document.getElementById('badge-wrap');wrap.innerHTML='';
+      const b=document.createElement('div');b.className=net>=0?'badge-profit':'badge-loss';
+      b.textContent=net>=0?'Profit: '+net+' €':'Loss: '+Math.abs(net)+' €';wrap.appendChild(b);
+      const c=document.getElementById('conclusion');
+      c.innerHTML=net>=0?'The project is profitable. We recommend reinvesting part of the profit.':'The project is unprofitable — consider reducing costs or increasing revenue.';
+      chart.data.datasets[0].data=[costsTotal,revsTotal];chart.update();
+    }
+    document.querySelectorAll('input.num').forEach(i=>i.addEventListener('input',updateAll));
+    const chart=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:['Expenses','Revenue'],datasets:[{label:'EUR',data:[0,0],backgroundColor:['#7c3aed','#10b981']}]},options:{scales:{y:{beginAtZero:true}},plugins:{legend:{display:false}}}});
+    updateAll();
+  </script>
+</body>
+</html>
