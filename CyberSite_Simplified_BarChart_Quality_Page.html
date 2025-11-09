@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CyberSite · Quality Metrics & Test Scenarios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body{margin:0;font-family:Inter,sans-serif;color:#e9edf7;background:linear-gradient(180deg,#090c12 0%,#0d1120 100%);overflow-x:hidden}
+    header{position:sticky;top:0;background:rgba(12,15,25,.75);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.1);z-index:10}
+    .nav{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:auto;padding:14px 20px}
+    .nav a{text-decoration:none;color:#b9c3de;padding:10px 16px;border-radius:10px;transition:.3s}
+    .nav a:hover{background:rgba(255,255,255,.08);color:#fff}
+    .cta{background:linear-gradient(135deg,#06b6d4,#7c3aed);color:#fff;font-weight:700;box-shadow:0 0 15px rgba(124,58,237,.5)}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;max-width:1200px;margin:auto;padding:60px 20px;align-items:center}
+    @media(max-width:900px){.hero{grid-template-columns:1fr;text-align:center}}
+    .hero h1{font-family:'Space Grotesk';font-size:clamp(28px,5vw,50px);margin-bottom:12px;background:linear-gradient(135deg,#06b6d4,#7c3aed);-webkit-background-clip:text;color:transparent}
+    .hero img{width:100%;border-radius:20px;box-shadow:0 0 30px rgba(6,182,212,.25)}
+    .section{max-width:1200px;margin:auto;padding:40px 20px}
+    h2{font-family:'Space Grotesk';font-size:clamp(24px,4vw,38px);margin-bottom:16px}
+    .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+    .metric{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:18px;border-radius:16px;position:relative;overflow:hidden}
+    .metric:hover{border-color:#7c3aed;box-shadow:0 0 25px rgba(124,58,237,.4)}
+    .metric h3{margin:0 0 8px;font-size:20px}
+    .metric p{color:#b4bdd3;font-size:15px}
+    .chart-container{margin:40px auto;max-width:800px;background:rgba(255,255,255,.05);padding:20px;border-radius:16px;backdrop-filter:blur(6px);box-shadow:0 0 20px rgba(6,182,212,.25)}
+    canvas{width:100%;height:400px}
+    .test{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:16px;border-radius:14px;margin-bottom:18px}
+    .test h3{color:#22d3ee;margin-bottom:8px}
+    footer{text-align:center;padding:30px 10px;color:#b4bdd3;font-size:14px;margin-top:40px;border-top:1px solid rgba(255,255,255,.1)}
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div><a href="#">CyberSite</a></div>
+      <div>
+        <a href="#metrics">Metrics</a>
+        <a href="#tests">Tests</a>
+        <a class="cta" href="https://artemiii990.github.io/CyberSite/" target="_blank">Main Site</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Quality Metrics & Test Scenarios</h1>
+      <p>Neon-themed summary of <strong>CyberSite</strong> KPIs and validation scenarios, designed for visual clarity and performance overview.</p>
+    </div>
+    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1400&q=80&auto=format&fit=crop" alt="Cyber futuristic city" />
+  </section>
+
+  <section id="metrics" class="section">
+    <h2>Quality Metrics</h2>
+    <div class="metric-grid">
+      <div class="metric"><h3>M1 – Availability (SLA)</h3><p>Target ≥ 99.5% uptime monthly.</p><p>Measured via monitoring services (UptimeRobot, StatusPage).</p></div>
+      <div class="metric"><h3>M2 – Page Load Speed</h3><p>Target < 2.5s for 75th percentile users.</p><p>Monitored via Lighthouse & Web Vitals.</p></div>
+      <div class="metric"><h3>M3 – Error Rate</h3><p>Target < 0.5% 5xx errors per week.</p><p>Observed via APM & logs (Sentry).</p></div>
+      <div class="metric"><h3>M4 – User Satisfaction</h3><p>Target ≥ 4.5 / 5 average rating.</p><p>Collected through post‑interaction surveys.</p></div>
+    </div>
+    <div class="chart-container">
+      <canvas id="barChart"></canvas>
+    </div>
+  </section>
+
+  <section id="tests" class="section">
+    <h2>Test Scenarios</h2>
+    <div class="test"><h3>T1 – User Registration</h3><p>Steps: Fill form → Submit → Confirm email. Expected: Success message, user logged in.</p></div>
+    <div class="test"><h3>T2 – Weak Password Blocking</h3><p>Steps: Try password “123456”. Expected: Validation error “Password too weak”.</p></div>
+    <div class="test"><h3>T3 – LCP Measurement</h3><p>Steps: Run Lighthouse → check median LCP. Expected: < 2.5s load time.</p></div>
+    <div class="test"><h3>T4 – Profile Data Consistency</h3><p>Steps: Edit phone → refresh page → check DB/API. Expected: Consistent data.</p></div>
+    <div class="test"><h3>T5 – XSS Protection</h3><p>Steps: Submit script in contact form. Expected: Sanitized text, no script execution.</p></div>
+    <div class="test"><h3>T6 – CI/CD Gate</h3><p>Steps: Deploy with >0.5% errors. Expected: Release blocked, notification sent.</p></div>
+  </section>
+
+  <footer>
+    © 2025 CyberSite · Neon-styled documentation | Photo: Unsplash
+  </footer>
+
+  <script>
+    const ctx = document.getElementById('barChart');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Availability', 'Speed', 'Error Rate', 'CSAT'],
+        datasets: [
+          {
+            label: 'Target (%)',
+            data: [100, 100, 100, 100],
+            backgroundColor: 'rgba(124,58,237,0.25)',
+            borderColor: '#7c3aed',
+            borderWidth: 1,
+          },
+          {
+            label: 'Current Performance (%)',
+            data: [98, 90, 95, 92],
+            backgroundColor: 'rgba(6,182,212,0.6)',
+            borderColor: '#06b6d4',
+            borderWidth: 1,
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 110,
+            grid: { color: 'rgba(255,255,255,.1)' },
+            ticks: { color: '#e9edf7' }
+          },
+          x: {
+            ticks: { color: '#e9edf7' },
+            grid: { color: 'rgba(255,255,255,.05)' }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: { color: '#e9edf7' }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
